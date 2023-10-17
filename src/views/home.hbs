@@ -1,0 +1,19 @@
+<h2>Productos handlebars</h2>
+{{#if existProducts}}
+    <div>
+    {{#each products}}
+        <p> {{title}} ${{price}} </p>
+        
+        {{!-- thumbnail comentado --}}
+        {{!-- si es img local --}}
+        {{!-- {{#if isLocal}}
+            <img height="20px" width="20px" src="/files/{{thumbnail}}"  >
+        {{else}}
+            <img height="20px" width="20px" src="{{thumbnail}}">
+        {{/if}}     --}}
+    {{/each}}
+    </div>
+{{else}}
+    <p>No hay productos</p>
+{{/if}}
+

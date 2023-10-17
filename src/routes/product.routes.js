@@ -4,6 +4,7 @@ import { existProduct } from '../middlewares/middlewares.product/existProduct.mi
 import { errorProduct } from '../middlewares/middlewares.product/errorProduct.middleware.js'
 import { errorIncompleteProductProperties } from '../middlewares/middlewares.product/errorIncompleteProductProperties.middlewares.js'
 import { incompleteProperties } from '../middlewares/middlewares.product/incompleteProperties.middlewares.js'
+import { io } from '../app.js'
 
 const router = Router()
 
@@ -16,6 +17,7 @@ router.get('/', async (req, res) => {
         if (limit) {
             products = products.slice(0, +limit)
         }
+        io.emit('products', products) //enviamos a socket los productos
         res.status(200).json({ 'products: ': products })
     } catch (error) {
         res.status(500).json({ error: 'Server error' })
@@ -41,6 +43,8 @@ router.post('/', incompleteProperties, errorIncompleteProductProperties, async (
         if (!product.status) {
             newProd.status = true
         }
+        const products = await productApi.getAll()
+        io.emit('products', products) //enviamos a socket los productos
         res.status(200).json({ message: 'Product added successfully', product: newProd })
     } catch (error) {
         console.log(error)
@@ -55,6 +59,8 @@ router.put('/:pid', existProduct, errorProduct, async (req, res) => {
         const product = await productApi.getById(+pid)
         const updatedProduct = Object.assign({}, product, newProduct) //une y/o reemplaza las propiedades repetidas
         await productApi.update(+pid, updatedProduct)
+        const products = await productApi.getAll()
+        io.emit('products', products) //enviamos a socket los productos
         res.status(200).json({ message: 'Product updated successfully' })
     } catch (error) {
         console.log(error)
@@ -66,6 +72,8 @@ router.delete('/:pid', existProduct, errorProduct, async (req, res) => {
     try {
         const { pid } = req.params
         await productApi.deleteById(+pid)
+        const products = await productApi.getAll()
+        io.emit('products', products) //enviamos a socket los productos
         res.status(200).json({ message: 'Product deleted successfully', id: pid })
     } catch (error) {
         console.log(error)

@@ -1,12 +1,20 @@
 # :skull: Proyect Node.js :skull:
 
-## :thought_balloon: What is it?
+## :thought_balloon: Websockets + Handlebars
 
-This is scaffolding for Node.js projects.
+Integrar vistas y sockets a nuestro servidor actual.
 
-## :checkered_flag: How to start?
+## :checkered_flag: Consigna
 
--   Install Node.js 18, go to [NVM](https://github.com/nvm-sh/nvm#git-install) for installation NVM.
+-   Configurar nuestro proyecto para que trabaje con Handlebars y websocket.
+
+-   vista "home.hbs" creada que mostrara todos los productos. -> http://localhost:8080
+
+-   vista "realTimeProducts.hbs" creada que mostrara todos los productos con soket.io -> http://localhost:8080/realTimeProducts
+
+## :checkered_flag: Como probarlo:
+
+No se usará un Formulario, se harán las peticiones a través de Postman (GET,POST,PUT,DELETE) y se actualizará en tiempo real en realTimeProducts.hbs con SocketIo.
 
 ```shell
 nvm install 18
